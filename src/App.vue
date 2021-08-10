@@ -10,6 +10,8 @@
         <site-title :title="title" />
       <v-spacer/>
       <v-btn icon @click="save"><v-icon>mdi-check</v-icon></v-btn>
+      <v-btn icon @click="read"><v-icon>mdi-numeric</v-icon></v-btn>
+      <v-btn icon @click="readOne"><v-icon>mdi-account-alert</v-icon></v-btn>
       <v-btn icon to="/about">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
@@ -57,6 +59,16 @@ export default {
       this.$firebase.database().ref().child('abcd').set({
         title: 'abcd', text: 'tttttt'
       })
+    },
+    read () {
+      this.$firebase.database().ref().child('abcd').on('value', (sn) => {
+        console.log(sn)
+        console.log(sn.val())
+      })
+    },
+    async readOne () {
+      const sn = await this.$firebase.database().ref().child('abcd').once('value')
+      console.log(sn.val())
     }
   }
 
