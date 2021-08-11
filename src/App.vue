@@ -9,17 +9,9 @@
       <v-app-bar-nav-icon @click="drawer = !drawer" />
         <site-title :title="site.title" />
       <v-spacer/>
-      <v-btn icon @click="save"><v-icon>mdi-check</v-icon></v-btn>
-      <v-btn icon @click="read"><v-icon>mdi-numeric</v-icon></v-btn>
-      <v-btn icon @click="readOne"><v-icon>mdi-account-alert</v-icon></v-btn>
-      <v-btn icon to="/about">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <v-btn icon to="/">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <site-sign></site-sign>
     </v-app-bar>
-      <v-navigation-drawer app v-model="drawer">
+      <v-navigation-drawer app v-model="drawer" width="400">
       <site-menu :items="site.menu"></site-menu>
       </v-navigation-drawer>
     <v-content>
@@ -46,9 +38,10 @@
 import SiteTitle from '@/views/site/title'
 import SiteFooter from '@/views/site/footer'
 import SiteMenu from '@/views/site/menu'
+import SiteSign from '@/views/site/sign'
 
 export default {
-  components: { SiteTitle, SiteFooter, SiteMenu },
+  components: { SiteTitle, SiteFooter, SiteMenu, SiteSign },
   name: 'App',
   data () {
     return {
@@ -72,11 +65,12 @@ export default {
           {
             title: 'about',
             active: true,
-            icon: 'mdi-account-badge',
+            icon: 'mdi-account',
             subItems: [
               {
                 title: 'xxx',
-                to: '/xxx'
+                to: '/xxx',
+                icon: 'mdi-calendar-range'
               }
             ]
           }
@@ -107,23 +101,24 @@ export default {
       }, (e) => {
         console.log(e.message)
       })
-    },
-    save () {
-      console.log('save000')
-      this.$firebase.database().ref().child('abcd').set({
-        title: 'abcd', text: 'tttttt'
-      })
-    },
-    read () {
-      this.$firebase.database().ref().child('abcd').on('value', (sn) => {
-        console.log(sn)
-        console.log(sn.val())
-      })
-    },
-    async readOne () {
-      const sn = await this.$firebase.database().ref().child('abcd').once('value')
-      console.log(sn.val())
     }
+    // ,
+    // save () {
+    //   console.log('save000')
+    //   this.$firebase.database().ref().child('abcd').set({
+    //     title: 'abcd', text: 'tttttt'
+    //   })
+    // },
+    // read () {
+    //   this.$firebase.database().ref().child('abcd').on('value', (sn) => {
+    //     console.log(sn)
+    //     console.log(sn.val())
+    //   })
+    // },
+    // async readOne () {
+    //   const sn = await this.$firebase.database().ref().child('abcd').once('value')
+    //   console.log(sn.val())
+    // }
   }
 
 }
