@@ -44,37 +44,11 @@
 
 <script>
 export default {
-  props: ['footer'],
+  props: ['items'],
 
   data () {
     return {
-      items: [
-        {
-          title: 'home',
-          icon: 'mdi-home',
-          subItems: [
-            {
-              title: 'Dashboard',
-              to: '/'
-            },
-            {
-              title: 'About',
-              to: '/about'
-            }
-          ]
-        },
-        {
-          title: 'about',
-          active: true,
-          icon: 'mdi-account-badge',
-          subItems: [
-            {
-              title: 'xxx',
-              to: '/xxx'
-            }
-          ]
-        }
-      ]
+
     }
   }
 
