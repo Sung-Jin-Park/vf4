@@ -10,7 +10,7 @@
             :server-items-length="totalDesserts"
             must-sort
         >
-            <template v-slot:item.id="{ item }">
+            <template v-slot:['item.id']="{ item }">
                 <v-btn icon @click="openDialog(item)"><v-icon>mdi-pencil</v-icon></v-btn>
                 <v-btn icon @click="remove(item)"><v-icon>mdi-delete</v-icon></v-btn>
             </template>
