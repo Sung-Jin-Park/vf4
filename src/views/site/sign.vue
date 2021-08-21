@@ -53,7 +53,7 @@ export default {
     signOut () {
       this.$firebase.auth().signOut()
     },
-    signInWithFacebookOut () {
+    signInWithFacebook () {
       throw Error('나중에 만들께요')
     }
   }

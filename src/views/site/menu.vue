@@ -35,6 +35,7 @@
                 <v-btn icon @click="openDialogItem(i)"><v-icon>mdi-pencil</v-icon></v-btn>
                 <v-btn icon @click="moveItem(items, i, -1)" v-if="i > 0"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
                 <v-btn icon @click="moveItem(items, i, 1)" v-if="i < items.length - 1"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+                <v-btn icon @click="removeItem(items, i)"><v-icon>mdi-delete</v-icon></v-btn>
               </span>
             </v-list-item-title>
           </v-list-item-content>
@@ -50,8 +51,9 @@
               {{ subItem.title }}
               <span v-if="$store.state.editable">
                 <v-btn icon @click="openDialogSubItem(i, j)"><v-icon>mdi-pencil</v-icon></v-btn>
-                <v-btn icon @click="moveItem(items, j, -1)" v-if="j > 0"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
-                <v-btn icon @click="moveItem(items, j, 1)" v-if="j < items.length - 1"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+                <v-btn icon @click="moveItem(item.subItems, j, -1)" v-if="j > 0"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
+                <v-btn icon @click="moveItem(item.subItems, j, 1)" v-if="j < item.subItems.length - 1"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+                <v-btn icon @click="removeItem(item.subItems, j)"><v-icon>mdi-delete</v-icon></v-btn>
               </span>
             </v-list-item-title>
           </v-list-item-content>
@@ -136,6 +138,7 @@ export default {
       },
       formSubItem: {
         icon: '',
+        title: '',
         to: ''
       }
 
@@ -155,6 +158,10 @@ export default {
     },
     async saveItem () {
       if (this.selectedItemIndex < 0) {
+        if (this.items === undefined) {
+          this.items = []
+        }
+
         this.items.push(this.formItem)
       } else {
         this.items[this.selectedItemIndex].icon = this.formItem.icon
@@ -175,28 +182,47 @@ export default {
     openDialogSubItem (index, subIndex) {
       this.selectedItemIndex = index
       this.selectedSubItemIndex = subIndex
+
+      console.log('서브 메뉴 수정', '대메뉴 Index : ' + this.selectedItemIndex, '메뉴 Index : ' + this.selectedSubItemIndex)
       if (subIndex < 0) {
         this.formSubItem.title = ''
         this.formSubItem.to = ''
+        this.formSubItem.icon = ''
       } else {
         this.formSubItem.title = this.items[index].subItems[subIndex].title
         this.formSubItem.to = this.items[index].subItems[subIndex].to
+        this.formSubItem.icon = this.items[index].subItems[subIndex].icon
       }
       this.dialogSubItem = true
     },
     async saveSubItem () {
+      // console.log('items', this.items)
       if (this.selectedSubItemIndex < 0) {
-        if (!this.items[this.selectedSubItemIndex].subItems) this.items[this.selectedItemIndex].subItems = []
-        this.items[this.selectedItemIndex].subItems.push({ title: this.formSubItem.title, to: this.formSubItem.to })
+        // console.log('subItems has not parent', this.items[this.selectedItemIndex])
+        if (!this.items[this.selectedItemIndex].subItems) {
+          // console.log('1')
+          this.items[this.selectedItemIndex].subItems = []
+        }
+        // console.log('2')
+        this.items[this.selectedItemIndex].subItems.push({ title: this.formSubItem.title, to: this.formSubItem.to, icon: this.formSubItem.icon })
+        // console.log('3')
       } else {
-        this.itmes[this.selectedItemIndex].subItems[this.selectedSubItemIndex].title = this.formSubItem.title
+        this.items[this.selectedItemIndex].subItems[this.selectedSubItemIndex].title = this.formSubItem.title
         this.items[this.selectedItemIndex].subItems[this.selectedSubItemIndex].to = this.formSubItem.to
+        this.items[this.selectedItemIndex].subItems[this.selectedSubItemIndex].icon = this.formSubItem.icon
       }
+
+      // console.log('save전 메뉴 상태', this.items)
+
       this.save()
     },
     moveItem (items, i, arrow) {
       const item = items.splice(i, 1)[0]
       items.splice(i + arrow, 0, item)
+    },
+    removeItem (items, i) {
+      items.splice(i, 1)
+      this.save()
     }
   }
 

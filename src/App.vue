@@ -14,11 +14,11 @@
       <v-navigation-drawer app v-model="drawer" width="400">
       <site-menu :items="site.menu"></site-menu>
       </v-navigation-drawer>
-    <v-content>
+    <v-main>
 
     <router-view/>
 
-    </v-content>
+    </v-main>
 
     <site-footer :footer="site.footer"></site-footer>
 
@@ -27,7 +27,7 @@
       :color="$store.state.sb.color"
     >
       {{ $store.state.sb.msg }}
-      <v-btn flat @click="$store.commit('pop', { act: false })">닫기</v-btn>
+      <v-btn text @click="$store.commit('pop', { act: false })">닫기</v-btn>
       </v-snackbar>
 
    </v-app>
@@ -96,8 +96,8 @@ export default {
         }
         this.site = v
 
-        console.log(sn)
-        console.log(sn.val())
+        console.log('메뉴', this.site)
+        // console.log(sn.val())
       }, (e) => {
         console.log(e.message)
       })
