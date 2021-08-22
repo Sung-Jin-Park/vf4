@@ -29,18 +29,34 @@ const routes = [
   {
     path: '/board',
     name: 'board',
-    component: () => import(/* webpackChunkName: "about" */ '../views/board/')
+    component: () => import('../views/board/')
   },
   {
     path: '/storage',
     name: 'storage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/storage.vue')
+    component: () => import('../views/storage.vue')
   },
   {
     path: '/editor',
     name: 'editor',
-    component: () => import(/* webpackChunkName: "about" */ '../views/editor.vue')
+    component: () => import('../views/editor.vue')
+  },
+  {
+    path: '/:collection/:document',
+    name: 'collection-document',
+    component: () => import('../views/renderer')
+  },
+  {
+    path: '/:collection/:document/:action',
+    name: 'collection-document-action',
+    component: () => import('../views/renderer')
+  },
+  {
+    path: '*',
+    name: 'error',
+    component: () => import('../views/error')
   }
+
 ]
 
 const router = new VueRouter({
