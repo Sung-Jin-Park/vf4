@@ -12,7 +12,7 @@
     item-key="id"
     >
 
-    <template v-slot:item.createdAt="{item}">
+    <template>
       <display-time :time="item.createdAt"></display-time>
     </template>
   </v-data-table>
