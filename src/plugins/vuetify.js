@@ -3,6 +3,8 @@ import 'vuetify/dist/vuetify.min.css'
 // import Vuetify, { VSnackbar, VBtn, VIcon } from 'vuetify/lib'
 import Vuetify from 'vuetify'
 // import VuetifyToast from 'vuetify-toast-snackbar'
+import en from 'vuetify/es5/locale/en'
+import ko from 'vuetify/es5/locale/ko'
 
 Vue.use(Vuetify)
 
@@ -69,4 +71,8 @@ Vue.use(Vuetify)
 // })
 
 export default new Vuetify({
+  lang: {
+    locales: { en, ko },
+    current: 'ko'
+  }
 })

@@ -80,6 +80,8 @@ export default {
         if (!this.articleId) {
           doc.createdAt = createdAt
           doc.commentCount = 0
+          doc.readCount = 0
+          doc.user = 'PSJ'
           batch.set(this.ref.collection('articles').doc(id), doc)
           batch.update(this.ref, { count: this.$firebase.firestore.FieldValue.increment(1) })
         } else {
